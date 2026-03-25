@@ -1,7 +1,15 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
+  cacheComponents: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "i8qy5y6gxkdgdcv9.public.blob.vercel-storage.com",
+      },
+    ],
+  },
+}
 
-export default nextConfig;
+export default nextConfig
