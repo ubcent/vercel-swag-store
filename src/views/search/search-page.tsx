@@ -1,4 +1,5 @@
 import { Suspense } from "react"
+import { cacheLife } from "next/cache"
 import { getCategories } from "@/shared/api"
 import { SearchResultsSection, SearchResultsSkeleton } from "@/widgets/product-grid"
 import { SearchControls } from "./search-controls"
@@ -10,13 +11,21 @@ interface SearchPageProps {
 export function SearchPage({ searchParams }: SearchPageProps) {
   return (
     <Suspense fallback={<SearchPageSkeleton />}>
-      <SearchPageContent searchParams={searchParams} />
+      <SearchPageInner searchParams={searchParams} />
     </Suspense>
   )
 }
 
-async function SearchPageContent({ searchParams }: SearchPageProps) {
+async function SearchPageInner({ searchParams }: SearchPageProps) {
   const { q, category } = await searchParams
+  return <SearchPageContent q={q} category={category} />
+}
+
+// Cached per unique (q, category) combination
+async function SearchPageContent({ q, category }: { q?: string; category?: string }) {
+  "use cache"
+  cacheLife("minutes")
+
   const categories = await getCategories()
 
   return (

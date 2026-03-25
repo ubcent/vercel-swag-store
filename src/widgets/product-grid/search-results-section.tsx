@@ -1,4 +1,4 @@
-import { cacheLife, cacheTag } from "next/cache"
+import { cacheLife } from "next/cache"
 import { getProducts } from "@/shared/api"
 import { ProductCard } from "@/entities/product"
 
@@ -10,7 +10,6 @@ interface SearchResultsSectionProps {
 async function fetchSearchResults(q: string | undefined, category: string | undefined) {
   "use cache"
   cacheLife("minutes")
-  cacheTag("search-results")
   const params: Parameters<typeof getProducts>[0] = { limit: 5 }
   if (q) params.search = q
   if (category) params.category = category
