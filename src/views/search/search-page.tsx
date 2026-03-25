@@ -4,11 +4,19 @@ import { SearchResultsSection, SearchResultsSkeleton } from "@/widgets/product-g
 import { SearchControls } from "./search-controls"
 
 interface SearchPageProps {
-  q?: string
-  category?: string
+  searchParams: Promise<{ q?: string; category?: string }>
 }
 
-export async function SearchPage({ q, category }: SearchPageProps) {
+export function SearchPage({ searchParams }: SearchPageProps) {
+  return (
+    <Suspense fallback={<SearchPageSkeleton />}>
+      <SearchPageContent searchParams={searchParams} />
+    </Suspense>
+  )
+}
+
+async function SearchPageContent({ searchParams }: SearchPageProps) {
+  const { q, category } = await searchParams
   const categories = await getCategories()
 
   return (
@@ -20,6 +28,19 @@ export async function SearchPage({ q, category }: SearchPageProps) {
       <Suspense key={`${q}-${category}`} fallback={<SearchResultsSkeleton />}>
         <SearchResultsSection q={q} category={category} />
       </Suspense>
+    </div>
+  )
+}
+
+function SearchPageSkeleton() {
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <div className="bg-muted mb-6 h-9 w-32 animate-pulse rounded-md" />
+      <div className="mb-8 flex gap-2">
+        <div className="bg-muted h-9 flex-1 animate-pulse rounded-md" />
+        <div className="bg-muted h-9 w-40 animate-pulse rounded-md" />
+      </div>
+      <SearchResultsSkeleton />
     </div>
   )
 }

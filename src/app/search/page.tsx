@@ -10,7 +10,6 @@ interface Props {
   searchParams: Promise<{ q?: string; category?: string }>
 }
 
-export default async function Page({ searchParams }: Props) {
-  const { q, category } = await searchParams
-  return <SearchPage q={q} category={category} />
+export default function Page({ searchParams }: Props) {
+  return <SearchPage searchParams={searchParams} />
 }

@@ -14,8 +14,8 @@ export function HeroSection() {
         }}
       />
 
-      <div className="container relative mx-auto flex flex-col items-center gap-6 px-4 py-24 text-center md:py-36">
-        <div className="border-border bg-muted text-muted-foreground inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs uppercase tracking-widest">
+      <div className="relative container mx-auto flex flex-col items-center gap-6 px-4 py-24 text-center md:py-36">
+        <div className="border-border bg-muted text-muted-foreground inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs tracking-widest uppercase">
           <span className="bg-primary size-1.5 rounded-full" />
           Official Vercel Merchandise
         </div>
